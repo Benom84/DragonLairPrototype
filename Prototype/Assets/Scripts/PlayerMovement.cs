@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour {
 	public float upForce = 2.0f;
 	public GameObject fireball;
 	public GameObject blueFireball;
+	public GameObject greenFireball;
 
 	private bool debugMode = true;
 
@@ -38,24 +39,40 @@ public class PlayerMovement : MonoBehaviour {
 
 	}
 
-	public void Attack0() {
-
-		Vector3 pos = transform.position;
-		pos.x += 1.6f;
-		Instantiate (fireball, pos, transform.rotation);
-	}
-
 	public void Attack1() {
-		
+
 		Vector3 pos = transform.position;
-		pos.x += 1.6f;
-		Instantiate (blueFireball, pos, transform.rotation);
+		pos.x += 1.6f * transform.localScale.x;
+		Instantiate (fireball, pos, transform.rotation);
 	}
 
 	public void Attack2() {
 		
 		Vector3 pos = transform.position;
-		pos.x += 1.6f;
-		Instantiate (fireball, pos, transform.rotation);
+		pos.x += 1.6f * transform.localScale.x;
+		Instantiate (blueFireball, pos, transform.rotation);
+	}
+
+	public void Attack3() {
+		
+		Vector3 pos = transform.position;
+		pos.x += 1.6f * transform.localScale.x;
+		Instantiate (greenFireball, pos, transform.rotation);
+	}
+
+	public void Flip(Vector3 touchPos) {
+
+		Vector3 scale = transform.localScale;
+		float diff = touchPos.x - transform.position.x;
+		// If the touch is to the right and the scale is positive
+		if ((diff > 0) && (scale.x > 0))
+						return;
+		// If the touch is to the left and the scale is negative
+		if ((diff < 0) && (scale.x < 0))
+			return;
+
+		scale.x *= -1;
+		transform.localScale = scale;
+	
 	}
 }
