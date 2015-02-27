@@ -5,12 +5,19 @@ public class PlayerMovement : MonoBehaviour {
 
 	public float sideForce = 2.0f;
 	public float upForce = 2.0f;
+	public int hp = 100;
 	public GameObject fireball;
 	public GameObject blueFireball;
 	public GameObject greenFireball;
 
 	private bool debugMode = true;
+	private LevelManager levelManager;
 
+	void Start() {
+
+		levelManager = GameObject.FindGameObjectWithTag ("GameController").GetComponent<LevelManager>();
+	
+	}
 	public void MoveUp() {
 
 		if (debugMode) Debug.Log ("MoveUp was called");
@@ -73,6 +80,21 @@ public class PlayerMovement : MonoBehaviour {
 
 		scale.x *= -1;
 		transform.localScale = scale;
+	
+	}
+
+	public void Hit(int damage) {
+
+		hp -= damage;
+		if (hp <= 0)
+						Death ();
+	
+	}
+
+	private void Death() {
+
+		levelManager.gameEnded = true;
+		DestroyObject (gameObject);
 	
 	}
 }
