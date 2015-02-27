@@ -4,6 +4,7 @@ using System.Collections;
 public class Enemy : MonoBehaviour {
 
 	public int hp = 2;
+	public int maxHP = 2;
 	public float attackDelay = 2f;
 	public float attackSpeed = 2f;
 	public int attackDamage = 1;

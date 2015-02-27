@@ -6,24 +6,50 @@ public class PlayerMovement : MonoBehaviour {
 	public float sideForce = 2.0f;
 	public float upForce = 2.0f;
 	public int hp = 100;
+	public int maxHP = 100;
+	public int stamina = 10;
+	public int maxStamina = 10;
+	public float staminaRefillTime = 3f;
+	public float healthRefillTime = 10f;
 	public GameObject fireball;
 	public GameObject blueFireball;
 	public GameObject greenFireball;
 
 	private bool debugMode = true;
 	private LevelManager levelManager;
+	private float lastHealthRefill = 0f;
+	private float lastStaminaRefill = 0f;
 
 	void Start() {
 
 		levelManager = GameObject.FindGameObjectWithTag ("GameController").GetComponent<LevelManager>();
 	
 	}
+
+	void FixedUpdate() {
+
+		if ((stamina < maxStamina) && (Time.time > lastStaminaRefill + staminaRefillTime)) {
+			stamina++;
+			lastStaminaRefill = Time.time;
+		}
+		if ((hp < maxHP) && (Time.time > lastHealthRefill + healthRefillTime)) {
+			hp++;
+			lastHealthRefill = Time.time;
+		}
+
+
+
+	}
+
+
 	public void MoveUp() {
 
+		if (stamina == 0) return;
 		if (debugMode) Debug.Log ("MoveUp was called");
 		Vector2 speed = rigidbody2D.velocity;
 		speed.y += upForce;
 		rigidbody2D.velocity = speed;
+		stamina--;
 
 
 	}
